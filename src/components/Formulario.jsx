@@ -3,7 +3,7 @@ import Error from "./Error";
 
 
 
-const Formulario = ({pacientes, setPacientes, paciente}) => {
+const Formulario = ({pacientes, setPacientes, paciente, setPaciente}) => {
   const [nombre,setNombre] = useState('');
   const [propietario,setPropietario] = useState('');
   const [email,setEmail] = useState('');
@@ -48,11 +48,27 @@ const Formulario = ({pacientes, setPacientes, paciente}) => {
       propietario,
       email,
       fecha,
-      sintomas,
-      id: generarId()
+      sintomas
+      
     }
 
-    setPacientes([...pacientes, objetoPaciente]);
+    if(paciente.id ){
+        //editando el registro 
+        objetoPaciente.id = paciente.id
+
+        const pacienteActualizados = pacientes.map( pacienteState => pacienteState.id === 
+          paciente.id  ? objetoPaciente : pacienteState )
+
+          setPacientes(pacienteActualizados)
+          setPaciente({})
+
+
+    }else{
+      //Nuevo registro
+      objetoPaciente.id = generarId();
+      setPacientes([...pacientes, objetoPaciente]);
+    }
+
 
     //reiniciar el form
 
@@ -148,8 +164,8 @@ const Formulario = ({pacientes, setPacientes, paciente}) => {
 
           <input
             type="submit"
-            className="bg-indigo-600 w-full p-3 text-white uppercase font-bold hover:bg-indigo-700 cursor-pointer transition-colors"
-            value="Agregar Paciente"
+            className="bg-indigo-600 w-full p-3 text-white uppercase font-bold hover:bg-indigo-700 cursor-pointer transition-colors rounded-md"
+            value={paciente.id ? 'Editar Paciente' : 'Agregar Paciente'}
 
           />
         </form>
