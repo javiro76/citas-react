@@ -2,13 +2,21 @@
 
 
 
-const Paciente = ({paciente, setPaciente}) => {
+const Paciente = ({paciente, setPaciente,eliminarPaciente}) => {
 
   // useEffect(() =>{
   //   console.log('el componente esta listo'); // en este caso como esta vacío me ayuda para saber 
   // },[])// cuando se carga un componente. 
 
-  const {email,sintomas} = paciente // otra forma de hacerlo
+  const {email,sintomas,id} = paciente // otra forma de hacerlo
+
+  const handleEliminar = () => {
+    const respuesta = confirm('Deseas eliminar este paciente?');
+
+    if(respuesta){
+      eliminarPaciente(id)
+    }
+  } 
 
   return (
     <div className="mx-5 my-10 bg-white shadow-md px-5 py-10 rounded-xl">
@@ -35,7 +43,10 @@ const Paciente = ({paciente, setPaciente}) => {
                 > 
             Editar
         </button>
-        <button type="button" className="py-2 px-10 bg-red-600 hover:bg-red-700 text-white font-bold uppercase rounded-md"> 
+        <button type="button" 
+                className="py-2 px-10 bg-red-600 hover:bg-red-700 text-white font-bold uppercase rounded-md"
+                onClick={handleEliminar}
+                > 
             Eliminar
         </button>
     </div>
